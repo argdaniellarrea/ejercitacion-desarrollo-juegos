@@ -1,4 +1,5 @@
-﻿using System.Collections;using System.Collections.Generic;
+﻿using System;
+using System.Collections;using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
@@ -14,6 +15,9 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private float acceleration = 1f;
 
+    [SerializeField]
+    private float distance;
+
     private Vector3 directionToMove = Vector3.zero;
 
     private bool hasToJump = false;
@@ -21,6 +25,10 @@ public class Character : MonoBehaviour {
     private bool isJumping = false;
 
     private Rigidbody rigidBody;
+
+    private RaycastHit hit = new RaycastHit();
+
+//    private Boolean? isFalling = null;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +39,7 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-        if (!isJumping) {
+        if (!isFalling()) {
             if (directionToMove != Vector3.zero)
             {
                 rigidBody.AddForce(directionToMove * acceleration, ForceMode.Impulse);
@@ -68,7 +76,7 @@ public class Character : MonoBehaviour {
 
     public void jump()
     {
-        hasToJump = !isJumping;
+        hasToJump = !isFalling();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -84,6 +92,14 @@ public class Character : MonoBehaviour {
             }
             
         }
+    }
+
+    public bool isFalling()
+    {
+        Ray downRay = new Ray(transform.position + new Vector3(0f,0.1f,0f), Vector3.down); // this is the downward ray
+        Physics.Raycast(downRay, out hit);
+        distance = hit.distance;
+        return hit.distance > 0.5f;
     }
 
 }
