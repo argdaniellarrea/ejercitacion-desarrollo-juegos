@@ -1,8 +1,6 @@
 fileFormatVersion: 2
-guid: ccf33a3bb5c6063429a8842c39f10728
-labels:
-- Character
-timeCreated: 1503267738
+guid: a46e8acf60e5ded419be1cce7f6f7d88
+timeCreated: 1503355786
 licenseType: Free
 NativeFormatImporter:
   mainObjectFileID: 100100000
